@@ -95,8 +95,6 @@ struct TodayView: View {
             .sheet(item: $summarySession) { session in
                 WorkoutSummaryView(session: session)
             }
-            // TEMP PREVIEW — remove
-            .task { if summarySession == nil { summarySession = sessions.first } }
         }
     }
 
