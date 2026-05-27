@@ -1,0 +1,2 @@
+# WiterallyWiftingWeights
+Stronglifts, basically
