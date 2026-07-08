@@ -8,6 +8,7 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage(AppStorageKey.defaultRest) private var defaultRest = 120.0
     @AppStorage(AppStorageKey.appearance) private var appearanceRaw = AppearanceMode.dark.rawValue
+    @AppStorage(AppStorageKey.timerSound) private var timerSound = AppStorageKey.timerSoundDefault
 
     @State private var notificationStatus = "Checking…"
 
@@ -38,10 +39,14 @@ struct SettingsView: View {
                                in: RestTimerManager.minDuration...RestTimerManager.maxDuration,
                                step: 5)
                     }
+                    Toggle("Sound when timer ends", isOn: $timerSound)
+                        .onChange(of: timerSound) { _, isOn in
+                            if isOn { Sound.timerComplete() }
+                        }
                 } header: {
                     Text("Rest Timer")
                 } footer: {
-                    Text("Rest between sets. Allowed range is \(Int(RestTimerManager.minDuration))–\(Int(RestTimerManager.maxDuration)) seconds.")
+                    Text("Rest between sets. Allowed range is \(Int(RestTimerManager.minDuration))–\(Int(RestTimerManager.maxDuration)) seconds. A buzz always plays; the sound is an extra cue and follows your ringer/silent switch.")
                 }
 
                 Section("Notifications") {

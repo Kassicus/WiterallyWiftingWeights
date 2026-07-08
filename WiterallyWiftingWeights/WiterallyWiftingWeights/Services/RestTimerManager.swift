@@ -81,7 +81,16 @@ final class RestTimerManager {
 
     private func complete() {
         Haptics.success()
+        if soundEnabled { Sound.timerComplete() }
         stop()
+    }
+
+    /// Reads the Settings toggle directly from `UserDefaults` since this is a
+    /// model object rather than a SwiftUI view. Falls back to the shared
+    /// default when the key has never been written.
+    private var soundEnabled: Bool {
+        UserDefaults.standard.object(forKey: AppStorageKey.timerSound) as? Bool
+            ?? AppStorageKey.timerSoundDefault
     }
 
     private func stop() {
